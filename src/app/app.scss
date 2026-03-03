@@ -2,28 +2,60 @@ main {
   .control-buttons {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-  }
+    gap: 1.5rem;
+    padding: 0rem 1.5rem;
 
-  .control-buttons button {
-    padding: 0.6rem 1.2rem;
-    font-size: 1.4rem;
-    font-weight: 500;
+    .game-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.8rem 1.4rem;
 
-    background-color: #f5f5f5;
-    color: #222;
+      background-color: #f5f5f5;
+      color: #222;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 5px 0 #cccccc;
 
-    border: 1px solid #ccc;
-    border-radius: 6px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.1s ease;
 
-    cursor: pointer;
-    transition: background-color 0.15s ease, border-color 0.15s ease;
-  }
+      .btn-icon {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+      }
 
-  .control-buttons button:hover {
-    background-color: #a2e619;
-    border-color: #bbb;
+      &:hover {
+        background-color: #a2e619;
+        box-shadow: 0 5px 0 #7cb310;
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: translateY(3px);
+        box-shadow: 0 2px 0 #7cb310;
+      }
+
+      &:active,
+      &.active {
+        transform: translateY(3px);
+        box-shadow: 0 2px 0 #7cb310;
+      }
+
+      &.jump-btn {
+        background-color: #007bff;
+        color: white;
+        box-shadow: 0 5px 0 #0056b3;
+        &:hover {
+          background-color: #3395ff;
+          box-shadow: 0 5px 0 #0056b3;
+        }
+      }
+    }
   }
 
   .paused-state {
@@ -66,7 +98,6 @@ main {
 
   .game-state.gameFailed-state {
     background-color: rgba(255, 26, 26, 0.6);
-    
   }
   .game-state.paused-state {
     background-color: rgba(0, 0, 0, 0.6);
@@ -85,7 +116,7 @@ main {
     color: #fff;
     font-family: 'Arial', sans-serif;
     max-width: 20rem;
-    margin: 2.5%;
+    margin: 3.6rem 0rem;
     label {
       font-size: 0.95rem;
       font-weight: 600;
@@ -105,7 +136,9 @@ main {
       color: #fff;
       font-size: 1.6rem;
       text-align: center;
-      transition: border-color 0.2s, background-color 0.2s;
+      transition:
+        border-color 0.2s,
+        background-color 0.2s;
 
       &:focus {
         outline: none;
@@ -127,7 +160,9 @@ main {
       font-weight: bold;
       font-size: 1.6rem;
       cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
+      transition:
+        background-color 0.2s,
+        transform 0.1s;
 
       &:hover {
         background-color: #ff8533;
@@ -148,7 +183,7 @@ main {
   width: 100%;
   height: 40rem;
   overflow: hidden;
-  
+
   .jungle-wrapper {
     display: flex;
     position: absolute;
@@ -165,7 +200,7 @@ main {
     background-repeat: repeat-x;
     background-size: cover;
   }
-  
+
   .obstacle-img {
     position: relative;
     width: 7rem;
@@ -179,70 +214,6 @@ main {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%); 
-  }
-}
-
-.game-header {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
-  background: rgba(23, 23, 23, 0.9);
-  border-bottom: 1px solid #ddd;
-  backdrop-filter: blur(10px);
-  z-index: 100;
-
-  .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .round-logo {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #007bff; 
-    background-color: #333;
-    padding: 2px;
-  }
-
-  .logo {
-    margin: 0;
-    font-size: 1.4rem;
-    color: #f5f6fa;
-    letter-spacing: 1px;
-    font-weight: 800;
-    
-    span { 
-      color: #007bff;
-    }
-  }
-}
-
-.game-footer {
-  padding: 1.5rem;
-  background: #171717;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  text-align: center;
-  color: #64748b;
-  font-size: 1.2rem;
-  
-  .controls-hint {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-
-    span {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-    }
+    transform: translateX(-50%);
   }
 }
