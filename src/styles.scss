@@ -145,5 +145,7 @@ body {
   font-size: 1.6rem;
   font-family: "Roboto", sans-serif;
   background: linear-gradient(90deg, #f8fafc 0%, #eff6ff 100%);
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

@@ -1,3 +1,13 @@
+<header class="game-header">
+  <div class="logo-container">
+    <img src="/gorilla-question.avif" alt="Gorilla Runner Logo" class="round-logo" />
+    <h1 class="logo">GORILLA<span>RUNNER</span></h1>
+  </div>
+  <div class="stats-overview">
+    <span>HI-SCORE: {{ state.highScore() }}</span>
+  </div>
+</header>
+
 <main>
   <app-scoreboard></app-scoreboard>
   <div></div>
@@ -46,3 +56,12 @@
     <button class="pause-unpause-btn" (click)="engine.pauseUnpause()">{{ state.isPaused() ? 'Resume' : 'Pause' }}</button>
   </section>
 </main>
+
+<footer class="game-footer">
+  <div class="controls-hint">
+    <span>[↑] JUMP</span>
+    <span>[P] PAUSE</span>
+    <span>[R] RESTART</span>
+  </div>
+  <p>&copy; 2026 Built with Angular</p>
+</footer>

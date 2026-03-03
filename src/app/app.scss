@@ -1,7 +1,4 @@
 main {
-  padding-top: 1%;
-
-
   .control-buttons {
     display: flex;
     align-items: center;
@@ -88,7 +85,7 @@ main {
     color: #fff;
     font-family: 'Arial', sans-serif;
     max-width: 20rem;
-    margin: 5%;
+    margin: 2.5%;
     label {
       font-size: 0.95rem;
       font-weight: 600;
@@ -183,5 +180,69 @@ main {
   }
   to {
     transform: translateX(-50%); 
+  }
+}
+
+.game-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: rgba(23, 23, 23, 0.9);
+  border-bottom: 1px solid #ddd;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .round-logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff; 
+    background-color: #333;
+    padding: 2px;
+  }
+
+  .logo {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #f5f6fa;
+    letter-spacing: 1px;
+    font-weight: 800;
+    
+    span { 
+      color: #007bff;
+    }
+  }
+}
+
+.game-footer {
+  padding: 1.5rem;
+  background: #171717;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+  color: #64748b;
+  font-size: 1.2rem;
+  
+  .controls-hint {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    span {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
   }
 }

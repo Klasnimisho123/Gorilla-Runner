@@ -68,7 +68,7 @@ export class GameEngineService {
         filter(() => !this.state.isPaused() && this.state.isStarted()),
         tap(() => this.spawnObstacle())
       )
-      .subscribe();
+    .subscribe();
 
     this.obstacleMovementSub = interval(16)
       .pipe(
