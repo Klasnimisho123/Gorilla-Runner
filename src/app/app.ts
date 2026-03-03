@@ -14,7 +14,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [ReactiveFormsModule, Gorilla, Scoreboard],
 })
 export class App {
-  constructor(public state: GameStateService, public engine: GameEngineService) {}
+  constructor(
+    public state: GameStateService,
+    public engine: GameEngineService,
+  ) {}
 
   public timeInputControl = new FormControl(0);
   public roundTime = toSignal(this.timeInputControl.valueChanges, { initialValue: 0 });
@@ -35,12 +38,19 @@ export class App {
         this.engine.pauseUnpause();
         break;
       case 'r':
-        this.onStart()
+        this.onStart();
         break;
     }
   }
 
-  unitJump() {
+  @HostListener('window:blur')
+  onBlur() {
+    if (this.state.isStarted() && !this.state.isPaused()) {
+      this.engine.pauseUnpause();
+    }
+  }
+
+  public unitJump(): void {
     if (
       this.state.isJumping() ||
       !this.canJump ||
@@ -53,21 +63,22 @@ export class App {
 
     this.state.isJumping.set(true);
     this.canJump = false;
-    this.gorillaY.set(-200);
+    this.gorillaY.set(-150);
+
+    setTimeout(() => {
+      this.state.isJumping.set(false);
+    }, this.jumpDuration * 2);
 
     setTimeout(() => {
       this.gorillaY.set(0);
-      this.state.isJumping.set(false);
-
       setTimeout(() => {
         this.canJump = true;
       }, this.jumpDuration);
     }, this.jumpDuration);
   }
 
-  onStart() {
+  public onStart(): void {
     const timeValue = this.roundTime() ?? 0;
     this.engine.startGame(timeValue);
-    this.timeInputControl.setValue(0);
   }
 }

@@ -12,6 +12,7 @@ import {
 import { GameStateService } from './game-state';
 import { Obstacle, ObstacleType } from '../shared/model/models';
 
+
 @Injectable({ providedIn: 'root' })
 export class GameEngineService {
   constructor(public state: GameStateService) {}
@@ -110,11 +111,11 @@ export class GameEngineService {
     });
   }
 
-  private checkCollision(obs: any): boolean {
+  private checkCollision(obs: Obstacle): boolean {
     if (this.state.isJumping()) return false;
 
     const playerX = 100;
-    const buffer = 225;
+    const buffer = 120;
 
     return obs.x < playerX - buffer;
   }
@@ -127,7 +128,7 @@ export class GameEngineService {
       {
         id: ++this.obstacleId,
         type: types[Math.floor(Math.random() * types.length)],
-        x: 1500,
+        x: 1920,
         width: 50,
         passed: false,
       },
