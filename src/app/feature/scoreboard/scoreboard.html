@@ -8,7 +8,10 @@
 
     @if(state.isStarted()) {
       <div class="timer-board">
-        {{ engine.timer$ | async | timeFormat }}
+        <img src="timer.png" alt="">
+        <p>
+          {{ engine.timer$ | async | timeFormat }}
+        </p>
       </div>
     } 
   </section>

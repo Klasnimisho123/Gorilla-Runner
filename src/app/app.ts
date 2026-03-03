@@ -68,5 +68,6 @@ export class App {
   onStart() {
     const timeValue = this.roundTime() ?? 0;
     this.engine.startGame(timeValue);
+    this.timeInputControl.setValue(0);
   }
 }
