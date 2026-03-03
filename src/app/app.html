@@ -1,0 +1,43 @@
+<main>
+  <app-scoreboard></app-scoreboard>
+  <div></div>
+  @if(state.isPaused()) {
+  <div class="game-state paused-state">Paused</div>
+  } @if(state.isGameOver()) {
+  <div class="game-state gameFailed-state">Game Over</div>
+  }
+
+  <div class="content-track">
+    <div
+      class="jungle-wrapper"
+      [style.animationPlayState]="state.isPaused() || !state.isStarted() ? 'paused' : 'running'"
+    >
+      <div class="jungle-background"></div>
+      <div class="jungle-background"></div>
+    </div>
+
+    <app-gorilla [yOffset]="gorillaY()" [isRunning]="state.isStarted()" [isPaused]="state.isPaused()"></app-gorilla>
+
+    @for(obstacle of engine.obstacles(); track obstacle.id) {
+    <div class="obstacle">
+      <img
+        class="obstacle-img"
+        [style.transform]="'translateX(' + obstacle.x + 'px)'"
+        [src]="'/' + obstacle.type + '-obstacle.png'"
+        [alt]="obstacle.type"
+      />
+    </div>
+    }
+  </div>
+
+  <section class="control-buttons">
+    <div class="timer-input-card">
+      <label for="time-input">Enter time limit and start</label>
+      <input [formControl]="timeInputControl" type="number" id="time-input" />
+      <button (click)="onStart()">Start</button>
+    </div>
+    <button (click)="unitJump()">Jump</button>
+    <button (click)="engine.startGame(this.roundTime() ?? 0)">Restart</button>
+    <button class="pause-unpause-btn" (click)="engine.pauseUnpause()">{{ state.isPaused() ? 'Resume' : 'Pause' }}</button>
+  </section>
+</main>

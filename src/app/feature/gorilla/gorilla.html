@@ -1,0 +1,13 @@
+<div class="main-unit" [style.transform]="transformStyle()">
+  <img
+    class="spinner-loader"
+    [style.animation-play-state]="playState()"
+    src="./spinner-loader.png"
+  />
+  <img
+    class="gorilla-unit"
+    [class.standing]="!isRunning()"
+    [src]="gorillaSrc()"
+    alt="GORILLA IMG"
+    />
+  </div>
