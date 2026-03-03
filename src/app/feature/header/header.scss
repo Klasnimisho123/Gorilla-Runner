@@ -1,0 +1,45 @@
+.game-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: rgba(23, 23, 23, 0.9);
+  border-bottom: 1px solid #ddd;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  .stats-overview {
+    font-size: 1.4rem;
+    color: #64748b;
+    font-weight: 600;
+    color: #f5f6fa;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .round-logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff;
+    background-color: #333;
+    padding: 2px;
+  }
+
+  .logo {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #f5f6fa;
+    letter-spacing: 1px;
+    font-weight: 800;
+
+    span {
+      color: #007bff;
+    }
+  }
+}

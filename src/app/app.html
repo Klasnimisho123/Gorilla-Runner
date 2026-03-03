@@ -1,10 +1,13 @@
+<app-header></app-header>
+
 <main>
   <app-scoreboard></app-scoreboard>
   <div></div>
-  @if(state.isPaused()) {
-  <div class="game-state paused-state">Paused</div>
-  } @if(state.isGameOver()) {
-  <div class="game-state gameFailed-state">Game Over</div>
+  @if (state.isPaused()) {
+    <div class="game-state paused-state">Paused</div>
+  }
+  @if (state.isGameOver()) {
+    <div class="game-state gameFailed-state">Game Over</div>
   }
 
   <div class="content-track">
@@ -16,28 +19,57 @@
       <div class="jungle-background"></div>
     </div>
 
-    <app-gorilla [yOffset]="gorillaY()" [isRunning]="state.isStarted()" [isPaused]="state.isPaused()"></app-gorilla>
+    <app-gorilla
+      [yOffset]="gorillaY()"
+      [isRunning]="state.isStarted()"
+      [isPaused]="state.isPaused()"
+    ></app-gorilla>
 
-    @for(obstacle of engine.obstacles(); track obstacle.id) {
-    <div class="obstacle">
-      <img
-        class="obstacle-img"
-        [style.transform]="'translateX(' + obstacle.x + 'px)'"
-        [src]="'/' + obstacle.type + '-obstacle.png'"
-        [alt]="obstacle.type"
-      />
-    </div>
+    @for (obstacle of engine.obstacles(); track obstacle.id) {
+      <div class="obstacle">
+        <img
+          class="obstacle-img"
+          [style.transform]="'translateX(' + obstacle.x + 'px)'"
+          [src]="'/' + obstacle.type + '-obstacle.png'"
+          [alt]="obstacle.type"
+        />
+      </div>
     }
   </div>
 
   <section class="control-buttons">
     <div class="timer-input-card">
       <label for="time-input">Enter time limit and start</label>
-      <input [formControl]="timeInputControl" type="number" id="time-input" />
+      <input
+        [formControl]="timeInputControl"
+        type="number"
+        id="time-input"
+        min="0"
+        oninput="if (this.value < 0) this.value = 0;"
+      />
       <button (click)="onStart()">Start</button>
     </div>
-    <button (click)="unitJump()">Jump</button>
-    <button (click)="engine.startGame(this.roundTime() ?? 0)">Restart</button>
-    <button class="pause-unpause-btn" (click)="engine.pauseUnpause()">{{ state.isPaused() ? 'Resume' : 'Pause' }}</button>
+    <section class="control-buttons">
+      <button class="game-btn jump-btn" [class.active]="activeBtn() === 'jump'" (click)="unitJump()">
+        <img src="/jump-icon.png" alt="Jump" class="btn-icon" />
+        <span>Jump</span>
+      </button>
+
+      <button class="game-btn restart-btn" [class.active]="activeBtn() === 'restart'" (click)="engine.startGame(this.roundTime() ?? 0)">
+        <img src="/restart-icon.png" alt="Restart" class="btn-icon" />
+        <span>Restart</span>
+      </button>
+
+      <button class="game-btn pause-btn"  [class.active]="activeBtn() === 'pause'" (click)="engine.pauseUnpause()">
+        @if (state.isPaused()) {
+          <img src="/play-icon.png" alt="Resume" class="btn-icon" />
+          <span>Resume</span>
+        } @else {
+          <img src="/pause-icon.png" alt="Pause" class="btn-icon" />
+          <span>Pause</span>
+        }
+      </button>
+    </section>
   </section>
 </main>
+<app-footer></app-footer>

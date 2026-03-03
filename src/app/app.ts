@@ -5,16 +5,21 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Gorilla } from './feature/gorilla/gorilla';
 import { Scoreboard } from './feature/scoreboard/scoreboard';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { Footer } from './feature/footer/footer';
+import { Header } from './feature/header/header';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
   standalone: true,
-  imports: [ReactiveFormsModule, Gorilla, Scoreboard],
+  imports: [ReactiveFormsModule, Gorilla, Scoreboard, Footer, Header],
 })
 export class App {
-  constructor(public state: GameStateService, public engine: GameEngineService) {}
+  constructor(
+    public state: GameStateService,
+    public engine: GameEngineService,
+  ) {}
 
   public timeInputControl = new FormControl(0);
   public roundTime = toSignal(this.timeInputControl.valueChanges, { initialValue: 0 });
@@ -24,23 +29,39 @@ export class App {
   private canJump: boolean = true;
   private jumpDuration: number = 500;
 
+  public activeBtn = signal<string | null>(null);
+  
   @HostListener('window:keydown', ['$event'])
   handleKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowUp':
-      case ' ':
+        this.activeBtn.set('jump');
         this.unitJump();
         break;
       case 'p':
+        this.activeBtn.set('pause');
         this.engine.pauseUnpause();
         break;
       case 'r':
-        this.onStart()
+        this.activeBtn.set('restart');
+        this.onStart();
         break;
     }
   }
 
-  unitJump() {
+  @HostListener('window:keyup')
+  handleKeyup() {
+    this.activeBtn.set(null);
+  }
+
+  @HostListener('window:blur')
+  onBlur() {
+    if (this.state.isStarted() && !this.state.isPaused()) {
+      this.engine.pauseUnpause();
+    }
+  }
+
+  public unitJump(): void {
     if (
       this.state.isJumping() ||
       !this.canJump ||
@@ -53,19 +74,21 @@ export class App {
 
     this.state.isJumping.set(true);
     this.canJump = false;
-    this.gorillaY.set(-200);
+    this.gorillaY.set(-150);
+
+    setTimeout(() => {
+      this.state.isJumping.set(false);
+    }, this.jumpDuration * 2);
 
     setTimeout(() => {
       this.gorillaY.set(0);
-      this.state.isJumping.set(false);
-
       setTimeout(() => {
         this.canJump = true;
       }, this.jumpDuration);
     }, this.jumpDuration);
   }
 
-  onStart() {
+  public onStart(): void {
     const timeValue = this.roundTime() ?? 0;
     this.engine.startGame(timeValue);
   }

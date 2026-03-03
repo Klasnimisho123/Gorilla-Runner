@@ -2,13 +2,15 @@
     <div class="scoreboard">
       <p class="score-value">Score: {{ state.score() }}</p>
       <p class="speed-value">Speed: x{{ state.speed() - 3 }}</p>
-      <p class="high-score">High Score: {{ state.highScore() }}</p>
       <p class="passed-objects">Obstacles Passed: {{ engine.passedObjectCounter }}</p>
     </div>
 
     @if(state.isStarted()) {
       <div class="timer-board">
-        {{ engine.timer$ | async | timeFormat }}
+        <img src="timer.png" alt="">
+        <p>
+          {{ engine.timer$ | async | timeFormat }}
+        </p>
       </div>
     } 
   </section>
