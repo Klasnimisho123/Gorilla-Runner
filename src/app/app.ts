@@ -35,7 +35,7 @@ export class App {
   private jumpDuration: number = 500;
   private duckDuration: number = 300;
 
-  private isHoldingDuck = signal(false);
+  public isHoldingDuck = signal(false);
 
   public activeBtn = signal<string | null>(null);
 
@@ -112,12 +112,19 @@ export class App {
     this.state.isDucking.set(true);
 
     timer(this.duckDuration)
-      .pipe(take(1), takeUntilDestroyed())
-      .subscribe(() => {
-        if (!this.isHoldingDuck) {
-          this.state.isDucking.set(false);
-        }
-      });
+      .pipe(
+        filter(() => !this.isHoldingDuck()),
+        tap(() => this.state.isDucking.set(false)),
+        take(1),
+        takeUntilDestroyed(),
+      )
+      .subscribe();
+  }
+
+  public unitStopDuck(): void {
+    setTimeout(() => {
+      this.state.isDucking.set(false);
+    }, this.duckDuration - 100);
   }
 
   public canPerformAction = computed(

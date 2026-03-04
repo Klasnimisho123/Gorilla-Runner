@@ -68,7 +68,7 @@ main {
           max-height: 28px;
           transform: translateY(2px);
         }
-        
+
         &:active {
           transform: translateY(3px);
           box-shadow: 0 2px 0 $timer-accent;
@@ -205,6 +205,10 @@ main {
     width: 7rem;
     height: 7.6rem;
     object-fit: cover;
+
+    &.flying {
+      bottom: 150px;
+    }
   }
 }
 

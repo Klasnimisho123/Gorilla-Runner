@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import {
   interval,
   Subject,
@@ -15,7 +15,7 @@ import { Obstacle, ObstacleType } from '../shared/model/models';
 
 @Injectable({ providedIn: 'root' })
 export class GameEngineService {
-  constructor(public state: GameStateService) {}
+  private state = inject(GameStateService);
 
   private destroy$ = new Subject<void>();
 
@@ -122,13 +122,16 @@ export class GameEngineService {
 
   private spawnObstacle() {
     const types: ObstacleType[] = ['html', 'css', 'js', 'angular'];
+    
+    const isFlying = Math.random() < 0.2;
 
     this.obstacles.update((list) => [
       ...list,
       {
         id: ++this.obstacleId,
         type: types[Math.floor(Math.random() * types.length)],
-        x: 1920,
+        x: window.innerWidth,
+        flying: isFlying,
         width: 50,
         passed: false,
       },

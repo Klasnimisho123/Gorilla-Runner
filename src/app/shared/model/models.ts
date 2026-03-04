@@ -4,6 +4,7 @@ export interface Obstacle {
   id: number;
   type: ObstacleType
   x: number;
+  flying: boolean;
   width: number;
   passed: boolean;
 }
