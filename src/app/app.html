@@ -56,7 +56,7 @@
         <span>Jump</span>
       </button>
 
-      <button class="game-btn duck-btn" [class.active]="activeBtn() === 'duck'" (click)="unitDuck()">
+      <button class="game-btn duck-btn" [class.active]="activeBtn() === 'duck'" (click)="unitDuck()" (mousedown)="unitDuck()" (mouseup)="unitStopDuck()">
         <img src="/duck-icon.png" alt="duck" class="btn-icon" />
         <span>Duck</span>
       </button>

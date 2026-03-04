@@ -35,7 +35,7 @@ export class App {
   private jumpDuration: number = 500;
   private duckDuration: number = 300;
 
-  private isHoldingDuck = signal(false);
+  public isHoldingDuck = signal(false);
 
   public activeBtn = signal<string | null>(null);
 
@@ -118,6 +118,12 @@ export class App {
           this.state.isDucking.set(false);
         }
       });
+  }
+
+  public unitStopDuck(): void {
+    setTimeout(() => {
+        this.state.isDucking.set(false);
+      }, this.duckDuration-100);
   }
 
   public canPerformAction = computed(
