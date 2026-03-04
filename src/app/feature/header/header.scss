@@ -1,18 +1,20 @@
+@use '../../shared/styles//variables' as *;
+
 .game-header {
   height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  background: rgba(23, 23, 23, 0.9);
-  border-bottom: 1px solid #ddd;
+  background: rgba($primary, 0.9);
+  border-bottom: 1px solid $border;
   backdrop-filter: blur(10px);
   z-index: 100;
+
   .stats-overview {
     font-size: 1.4rem;
-    color: #64748b;
     font-weight: 600;
-    color: #f5f6fa;
+    color: $light-text;
   }
 
   .logo-container {
@@ -26,20 +28,22 @@
     height: 45px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #007bff;
-    background-color: #333;
+    border: 2px solid $focus-blue;
+    background-color: $text-dark;
     padding: 2px;
+    user-select: none;
+    pointer-events: none;
   }
 
   .logo {
     margin: 0;
     font-size: 1.4rem;
-    color: #f5f6fa;
+    color: $light-text;
     letter-spacing: 1px;
     font-weight: 800;
 
     span {
-      color: #007bff;
+      color: $focus-blue;
     }
   }
 }
