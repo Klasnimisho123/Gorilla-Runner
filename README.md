@@ -23,13 +23,6 @@ The goal was to create a responsive, arcade-style game using **New Angular** (v1
     * `[P]` to Pause/Resume
     * `[R]` to Quick Restart
 
-## 🏗️ Performance Architecture
-
-
-To ensure a high Lighthouse score even with game assets, I implemented **Lazy Loading**. 
-
-As a reminder, **lazy loading** allows the application to load the "App Shell" (Header/Footer) instantly. The game engine, obstacle logic, and parallax assets are only fetched when the user initializes the game route. This significantly reduces the initial bundle size and provides a seamless user experience.
-
 ## 🚦 Getting Started
 1. Clone the repository
 2. Run `npm install`
