@@ -24,9 +24,10 @@ main {
       transition: all 0.1s ease;
 
       .btn-icon {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
         object-fit: contain;
+        transition: transform 0.15s ease;
       }
 
       &:hover {
@@ -45,9 +46,32 @@ main {
         background-color: $focus-blue;
         color: white;
         box-shadow: 0 5px 0 #0056b3;
+
         &:hover {
           background-color: #3395ff;
           box-shadow: 0 5px 0 #0056b3;
+        }
+
+        &:active {
+          transform: translateY(3px);
+          box-shadow: 0 2px 0 #0056b3;
+        }
+      }
+
+      &.duck-btn {
+        background-color: $timer-accent-hover;
+        color: white;
+        box-shadow: 0 5px 0 $timer-accent;
+
+        .btn-icon {
+          max-width: 28px;
+          max-height: 28px;
+          transform: translateY(2px);
+        }
+        
+        &:active {
+          transform: translateY(3px);
+          box-shadow: 0 2px 0 $timer-accent;
         }
       }
     }
@@ -111,7 +135,9 @@ main {
       color: #fff;
       font-size: 1.6rem;
       text-align: center;
-      transition: border-color 0.2s, background-color 0.2s;
+      transition:
+        border-color 0.2s,
+        background-color 0.2s;
 
       &:focus {
         outline: none;
@@ -133,7 +159,9 @@ main {
       font-weight: bold;
       font-size: 1.6rem;
       cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
+      transition:
+        background-color 0.2s,
+        transform 0.1s;
 
       &:hover {
         background-color: $timer-accent-hover;
@@ -167,7 +195,7 @@ main {
   .jungle-background {
     width: 50%;
     height: 100%;
-    background-image: url('https://cdn.gamedevmarket.net/wp-content/uploads/20191203185200/Game_Background_38.jpg');
+    background-image: url('../../public/jungle.jpg');
     background-repeat: repeat-x;
     background-size: cover;
   }

@@ -6,6 +6,7 @@ export class GameStateService {
   public isPaused = signal(false);
   public isGameOver = signal(false);
   public isJumping = signal(false);
+  public isDucking = signal(false);
 
   public score = signal(0);
   public highScore = signal(this.loadHighScore());

@@ -1,4 +1,7 @@
-<div class="main-unit" [style.transform]="transformStyle()">
+<div
+  class="main-unit"
+  [style.transform]="transformStyle()"
+  [class.ducking]="isDucking()">
   <img
     class="spinner-loader"
     [style.animation-play-state]="playState()"
@@ -9,5 +12,5 @@
     [class.standing]="!isRunning()"
     [src]="gorillaSrc()"
     alt="GORILLA IMG"
-    />
-  </div>
+  />
+</div>

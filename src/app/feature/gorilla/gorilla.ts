@@ -1,5 +1,4 @@
 import { Component, computed, input, Input } from '@angular/core';
-import { GameStateService } from '../../core/game-state';
 
 @Component({
   selector: 'app-gorilla',
@@ -11,6 +10,7 @@ export class Gorilla {
   public yOffset  = input<number>(0);
   public isRunning = input<boolean>(false);
   public isPaused = input<boolean>(false);
+  public isDucking = input<boolean>(false);
 
   public gorillaSrc = computed(() => {
     if (this.isPaused() || !this.isRunning()) {
@@ -26,4 +26,5 @@ export class Gorilla {
   public transformStyle = computed(() => 
     `translateY(${this.yOffset()}px)`
   );
+
 }
