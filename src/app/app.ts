@@ -1,4 +1,4 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, computed, HostListener, inject, signal } from '@angular/core';
 import { GameStateService } from './core/game-state';
 import { GameEngineService } from './core/game-engine';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -16,10 +16,8 @@ import { Header } from './feature/header/header';
   imports: [ReactiveFormsModule, Gorilla, Scoreboard, Footer, Header],
 })
 export class App {
-  constructor(
-    public state: GameStateService,
-    public engine: GameEngineService,
-  ) {}
+  public state = inject(GameStateService);
+  public engine = inject(GameEngineService);
 
   public timeInputControl = new FormControl(0);
   public roundTime = toSignal(this.timeInputControl.valueChanges, { initialValue: 0 });
@@ -28,15 +26,20 @@ export class App {
 
   private canJump: boolean = true;
   private jumpDuration: number = 500;
+  private duckDuration: number = 300;
 
   public activeBtn = signal<string | null>(null);
-  
+
   @HostListener('window:keydown', ['$event'])
   handleKeydown(event: KeyboardEvent) {
     switch (event.key) {
       case 'ArrowUp':
         this.activeBtn.set('jump');
         this.unitJump();
+        break;
+      case 'ArrowDown':
+        this.activeBtn.set('duck');
+        this.unitDuck();
         break;
       case 'p':
         this.activeBtn.set('pause');
@@ -63,12 +66,11 @@ export class App {
 
   public unitJump(): void {
     if (
+      !this.canPerformAction() ||
       this.state.isJumping() ||
-      !this.canJump ||
-      !this.state.isStarted() ||
-      this.state.isPaused()
+      this.state.isDucking() ||
+      !this.canJump
     ) {
-      this.state.isJumping();
       return;
     }
 
@@ -87,6 +89,23 @@ export class App {
       }, this.jumpDuration);
     }, this.jumpDuration);
   }
+
+  public unitDuck(): void {
+  if (!this.canPerformAction() || this.state.isJumping()) {
+    return;
+  }
+
+  this.state.isDucking.set(true);
+  
+  // Keep ducking... do not distrub
+  setTimeout(() => {
+    this.state.isDucking.set(false);
+  }, this.duckDuration);
+}
+
+  public canPerformAction = computed(
+    () => this.state.isStarted() && !this.state.isPaused() && !this.state.isGameOver(),
+  );
 
   public onStart(): void {
     const timeValue = this.roundTime() ?? 0;

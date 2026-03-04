@@ -16,7 +16,6 @@ describe('App Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      // MOCKCOMPONENT?? -> ctx.state.score is not a function error
       imports: [App, MockComponent(Scoreboard), MockComponent(Gorilla)],
       providers: [
         MockProvider(GameStateService, {

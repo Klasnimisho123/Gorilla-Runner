@@ -24,9 +24,21 @@
     max-width: 16rem;
     user-select: none;
     pointer-events: none;
+    transform-origin: bottom center;
+    transition: transform 0.15s ease-out;
 
     &.standing {
       transform: rotate(-15deg);
+    }
+  }
+
+  &.ducking {
+    .gorilla-unit {
+      transform: scaleY(0.5) skewX(5deg);
+    }
+    
+    .spinner-loader {
+      opacity: 0;
     }
   }
 }

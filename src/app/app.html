@@ -23,6 +23,7 @@
       [yOffset]="gorillaY()"
       [isRunning]="state.isStarted()"
       [isPaused]="state.isPaused()"
+      [isDucking]="state.isDucking()"
     ></app-gorilla>
 
     @for (obstacle of engine.obstacles(); track obstacle.id) {
@@ -53,6 +54,11 @@
       <button class="game-btn jump-btn" [class.active]="activeBtn() === 'jump'" (click)="unitJump()">
         <img src="/jump-icon.png" alt="Jump" class="btn-icon" />
         <span>Jump</span>
+      </button>
+
+      <button class="game-btn duck-btn" [class.active]="activeBtn() === 'duck'" (click)="unitDuck()">
+        <img src="/duck-icon.png" alt="duck" class="btn-icon" />
+        <span>Duck</span>
       </button>
 
       <button class="game-btn restart-btn" [class.active]="activeBtn() === 'restart'" (click)="engine.startGame(this.roundTime() ?? 0)">
