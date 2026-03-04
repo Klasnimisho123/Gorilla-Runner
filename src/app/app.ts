@@ -127,6 +127,12 @@ export class App {
     }, this.duckDuration - 100);
   }
 
+  public unitStopDuck(): void {
+    setTimeout(() => {
+        this.state.isDucking.set(false);
+      }, this.duckDuration-100);
+  }
+
   public canPerformAction = computed(
     () => this.state.isStarted() && !this.state.isPaused() && !this.state.isGameOver(),
   );
