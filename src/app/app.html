@@ -30,6 +30,7 @@
       <div class="obstacle">
         <img
           class="obstacle-img"
+          [class.flying]="obstacle.flying"
           [style.transform]="'translateX(' + obstacle.x + 'px)'"
           [src]="'/' + obstacle.type + '-obstacle.png'"
           [alt]="obstacle.type"

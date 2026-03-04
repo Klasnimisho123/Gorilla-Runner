@@ -112,12 +112,13 @@ export class App {
     this.state.isDucking.set(true);
 
     timer(this.duckDuration)
-      .pipe(take(1), takeUntilDestroyed())
-      .subscribe(() => {
-        if (!this.isHoldingDuck) {
-          this.state.isDucking.set(false);
-        }
-      });
+      .pipe(
+        filter(() => !this.isHoldingDuck()),
+        tap(() => this.state.isDucking.set(false)),
+        take(1),
+        takeUntilDestroyed(),
+      )
+      .subscribe();
   }
 
   public unitStopDuck(): void {

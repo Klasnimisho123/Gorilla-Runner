@@ -215,8 +215,8 @@ describe('App Component', () => {
     describe('Obstacle Rendering and animations', () => {
       it('should render obstacles based on engine.obstacles signal', () => {
         engine.obstacles.set([
-          { id: 1, x: 100, type: 'angular', width: 50, passed: false },
-          { id: 2, x: 500, type: 'js', width: 50, passed: false },
+          { id: 1, x: 100, flying: false, type: 'angular', width: 50, passed: false },
+          { id: 2, x: 500, flying: false, type: 'js', width: 50, passed: false },
         ]);
 
         fixture.detectChanges();
@@ -233,7 +233,7 @@ describe('App Component', () => {
       });
 
       it('should set obstacle image source based on obstacle type', () => {
-        engine.obstacles.set([{ id: 1, x: 100, type: 'css', width: 50, passed: false }]);
+        engine.obstacles.set([{ id: 1, x: 100, flying: false, type: 'css', width: 50, passed: false }]);
         fixture.detectChanges();
         const obstacleImg: HTMLImageElement = fixture.nativeElement.querySelector('.obstacle-img');
         expect(obstacleImg).toBeTruthy();
@@ -241,7 +241,7 @@ describe('App Component', () => {
       });
 
       it('should position obstacles based on their x value', () => {
-        engine.obstacles.set([{ id: 1, x: 300, type: 'html', width: 50, passed: false }]);
+        engine.obstacles.set([{ id: 1, x: 300, flying: false, type: 'html', width: 50, passed: false }]);
         fixture.detectChanges();
         const obstacleImg = fixture.nativeElement.querySelector('.obstacle-img') as HTMLElement;
         expect(obstacleImg).toBeTruthy();
