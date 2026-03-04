@@ -123,12 +123,6 @@ export class App {
 
   public unitStopDuck(): void {
     setTimeout(() => {
-      this.state.isDucking.set(false);
-    }, this.duckDuration - 100);
-  }
-
-  public unitStopDuck(): void {
-    setTimeout(() => {
         this.state.isDucking.set(false);
       }, this.duckDuration-100);
   }
