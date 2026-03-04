@@ -133,10 +133,6 @@ a {
   color: black;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 html {
   font-size: 10px;
 }
@@ -160,4 +156,8 @@ body {
   background: #f8fafc;
   display: flex;
   flex-direction: column;
+}
+
+* {
+  box-sizing: border-box;
 }
