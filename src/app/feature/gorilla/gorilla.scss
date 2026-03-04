@@ -17,6 +17,9 @@
     left: 2rem;
     user-select: none;
     pointer-events: none;
+    transition: transform 0.15s ease-out; 
+
+    transition: transform 0.2s ease-out 0.1s;
   }
 
   .gorilla-unit {
@@ -26,19 +29,12 @@
     pointer-events: none;
     transform-origin: bottom center;
     transition: transform 0.15s ease-out;
-
-    &.standing {
-      transform: rotate(-15deg);
-    }
+    transform: rotate(-5deg);
   }
 
   &.ducking {
     .gorilla-unit {
       transform: scaleY(0.5) skewX(5deg);
-    }
-    
-    .spinner-loader {
-      opacity: 0;
     }
   }
 }

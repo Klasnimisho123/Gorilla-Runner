@@ -4,9 +4,16 @@ import { GameEngineService } from './core/game-engine';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Gorilla } from './feature/gorilla/gorilla';
 import { Scoreboard } from './feature/scoreboard/scoreboard';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Footer } from './feature/footer/footer';
 import { Header } from './feature/header/header';
+import { Subject } from 'rxjs/internal/Subject';
+import { tap } from 'rxjs/internal/operators/tap';
+import { switchMap } from 'rxjs/internal/operators/switchMap';
+import { timer } from 'rxjs/internal/observable/timer';
+import { concatMap } from 'rxjs/internal/operators/concatMap';
+import { filter } from 'rxjs/internal/operators/filter';
+import { take } from 'rxjs/internal/operators/take';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +35,8 @@ export class App {
   private jumpDuration: number = 500;
   private duckDuration: number = 300;
 
+  private isHoldingDuck = signal(false);
+
   public activeBtn = signal<string | null>(null);
 
   @HostListener('window:keydown', ['$event'])
@@ -38,6 +47,8 @@ export class App {
         this.unitJump();
         break;
       case 'ArrowDown':
+        if (event.repeat) return;
+        this.isHoldingDuck.set(true);
         this.activeBtn.set('duck');
         this.unitDuck();
         break;
@@ -52,8 +63,13 @@ export class App {
     }
   }
 
-  @HostListener('window:keyup')
-  handleKeyup() {
+  @HostListener('window:keyup', ['$event'])
+  handleKeyup(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown') {
+      this.isHoldingDuck.set(false);
+      this.activeBtn.set(null);
+      this.state.isDucking.set(false);
+    }
     this.activeBtn.set(null);
   }
 
@@ -91,17 +107,18 @@ export class App {
   }
 
   public unitDuck(): void {
-  if (!this.canPerformAction() || this.state.isJumping()) {
-    return;
-  }
+    if (!this.canPerformAction() || this.state.isJumping()) return;
 
-  this.state.isDucking.set(true);
-  
-  // Keep ducking... do not distrub
-  setTimeout(() => {
-    this.state.isDucking.set(false);
-  }, this.duckDuration);
-}
+    this.state.isDucking.set(true);
+
+    timer(this.duckDuration)
+      .pipe(take(1), takeUntilDestroyed())
+      .subscribe(() => {
+        if (!this.isHoldingDuck) {
+          this.state.isDucking.set(false);
+        }
+      });
+  }
 
   public canPerformAction = computed(
     () => this.state.isStarted() && !this.state.isPaused() && !this.state.isGameOver(),
