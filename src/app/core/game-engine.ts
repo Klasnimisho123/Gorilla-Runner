@@ -29,7 +29,7 @@ export class GameEngineService {
   public passedObjectCounter = 0;
   private obstacleId = 0;
 
-  public startGame(inputedRoundTime: number) {
+  public startGame(inputedRoundTime: number): void {
     if (inputedRoundTime <= 0) return;
 
     this.cleanup();
@@ -79,7 +79,7 @@ export class GameEngineService {
       .subscribe();
   }
 
-  private updatePhysics() {
+  private updatePhysics():void {
     this.obstacles.update((list) => {
       return list
         .map((obs) => {
@@ -112,7 +112,9 @@ export class GameEngineService {
   }
 
   private checkCollision(obs: Obstacle): boolean {
-    if (this.state.isJumping()) return false;
+    if (this.state.isJumping() && !obs.flying) return false;
+    if (this.state.isDucking() && obs.flying) return false;
+
 
     const playerX = 100;
     const buffer = 120;
@@ -120,7 +122,7 @@ export class GameEngineService {
     return obs.x < playerX - buffer;
   }
 
-  private spawnObstacle() {
+  private spawnObstacle():void {
     const types: ObstacleType[] = ['html', 'css', 'js', 'angular'];
     
     const isFlying = Math.random() < 0.2;
@@ -138,7 +140,7 @@ export class GameEngineService {
     ]);
   }
 
-  public gameOver() {
+  public gameOver(): void {
     this.state.isGameOver.set(true);
     this.state.isStarted.set(false);
     this.state.updateHighScore();
@@ -157,7 +159,7 @@ export class GameEngineService {
     }
   }
 
-  private resumeTimer() {
+  private resumeTimer(): void {
     this.timerSub = interval(1000)
       .pipe(
         tap(() => {
@@ -171,7 +173,7 @@ export class GameEngineService {
       });
   }
 
-  private cleanup() {
+  private cleanup(): void {
     this.timerSub?.unsubscribe();
     this.obstacleSpawnSub?.unsubscribe();
     this.obstacleMovementSub?.unsubscribe();
